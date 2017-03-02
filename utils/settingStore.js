@@ -9,12 +9,11 @@ const SettingStore =  {
         let fs = require('fs');
         let path = require('path');
 
-        let userSettingsPath= path.join(electronApp.getPath('userData'), appId + '.json');
+        let userSettingsPath= path.join(electronApp.getPath('userData'), appId.substring(0, 5) + '.json');
 
         try{
             return JSON.parse(fs.readFileSync(userSettingsPath));
         }catch(err){
-            console.log("NeutrinoMetrics: no user settings were found.");
             return false;
         }
     },
@@ -25,7 +24,7 @@ const SettingStore =  {
         let path = IPCUtils.getPathModuleCurrentProcess();
 
         let userSettingsFolder = electronApp.getPath('userData');
-        let userSettingsFilePath= path.join(userSettingsFolder, appId + '.json');
+        let userSettingsFilePath= path.join(userSettingsFolder, appId.substring(0, 5) + '.json');
 
         try{
             if (!fs.existsSync(userSettingsFolder)){

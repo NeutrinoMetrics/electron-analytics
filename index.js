@@ -10,11 +10,6 @@ const SettingStore = require('./utils/settingStore')
 const config = require("./config.js").get();
 
 module.exports = {
-    /**
-     *
-     * @param {string} appId
-     * @return {string}
-     */
     init:function(appId){
 
         if(appId && !IPCUtils.isRenderer() && process.env.EA_DISABLE_IN_DEV!=="true" ){
