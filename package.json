@@ -1,0 +1,33 @@
+{
+  "name": "electron-analytics",
+  "version": "0.1.0",
+  "description": "Client module for the Electron Analytics platform by NeutrinoMetrics",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NeutrinoMetrics/electron-analytics.git"
+  },
+  "keywords": [
+    "Electron",
+    "analytics",
+    "metrics",
+    "desktop",
+    "app",
+    "google",
+    "analytics",
+    "atom"
+  ],
+  "bugs": {
+    "url": "https://github.com/NeutrinoMetrics/electron-analytics/issues"
+  },
+  "homepage": "https://neutrinometrics.net",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  },
+  "author": "hirolabs",
+  "license": "ISC"
+}
