@@ -18,7 +18,7 @@ In your main process add the following script:
 ```javascript
 require("electron-analytics").init("<YOUR APP ID>");
 ```
-You can get an auto-generated ID for your app at [NeutrinoMetrics](https://beta.neutrinometrics.net/register).<br><br>
+You can get an auto-generated ID for your app [here](https://beta.neutrinometrics.net/register).<br><br>
 **IMPORTANT** *: Make sure this above code is in your **Main Process**! Check out the electron docs [Main Vs Renderer Process](http://electron.atom.io/docs/tutorial/quick-start/#renderer-process) for more info.
 
 

@@ -8,11 +8,6 @@ const IPCUtils = require('./utils/ipcUtils');
 const SettingStore = require('./utils/settingStore')
 
 const config = require("./config.js").get();
-const HOST_URL = config.statsServer.host
-const HOST_PORT = config.statsServer.port
-const UPDATE_INTERVAL = config.updateInterval
-
-
 
 module.exports = {
     /**
@@ -24,6 +19,11 @@ module.exports = {
 
         if(appId && !IPCUtils.isRenderer() && process.env.EA_DISABLE_IN_DEV!=="true" ){
             global.NEUTRINO_METRICS_APP_ID=appId;
+            global.NEUTRINO_METRICS_STATS_SERVER_CONFIG ={
+                host: config.statsServer.host,
+                port: config.statsServer.port,
+                updateInterval: config.updateInterval
+            }
 
             let userSettings = SettingStore.get(appId);
             if(!userSettings){
@@ -37,13 +37,14 @@ module.exports = {
             let statBody = StatBodyUtils.initStatBody(appId, userSettings);
             global.NEUTRINO_METRICS_STAT_BODY=statBody;
 
-            setInterval(updateSession, UPDATE_INTERVAL);
+            setInterval(updateSession, config.updateInterval);
         }
     },
     send:function(eventName){
+        let statsServerConfig = IPCUtils.getStatsServerConfig()
         let statBody=StatBodyUtils.getStatBody()
         if(statBody){
-            HttpHelper.request(HOST_URL, HOST_PORT, "event", "POST",
+            HttpHelper.request(statsServerConfig.host, statsServerConfig.port, "event", "POST",
                 {
                     userId:statBody.userId,
                     customId:statBody.customId,
@@ -58,9 +59,10 @@ module.exports = {
     setCustomUserId:function(customId){
 
         let statBody=StatBodyUtils.getStatBody();
+        let statsServerConfig = IPCUtils.getStatsServerConfig()
 
-        if(statBody){
-            HttpHelper.request(HOST_URL, HOST_PORT, "project/user", "PUT",
+        if(statBody && customId!==statBody.customId){
+            HttpHelper.request(statsServerConfig.host, statsServerConfig.port, "project/user", "PUT",
                 {
                     userId:statBody.userId,
                     customId:customId,
@@ -83,9 +85,11 @@ module.exports = {
 
 function updateSession(){
     if(!IPCUtils.isRenderer()){
+        let statsServerConfig = IPCUtils.getStatsServerConfig();
         let statBody = global.NEUTRINO_METRICS_STAT_BODY;
+
         statBody.accessTime= StatBodyUtils.getTimestampInUTC()
-        HttpHelper.request(HOST_URL, HOST_PORT, "", "POST", statBody)
+        HttpHelper.request(statsServerConfig.host, statsServerConfig.port, "", "POST", statBody)
     }
 }
 

@@ -16,6 +16,13 @@ module.exports={
         }else{
             return require('path');
         }
+    },
+    getStatsServerConfig:function(){
+        if(isRenderer()){
+            return electron.remote.getGlobal('NEUTRINO_METRICS_STATS_SERVER_CONFIG')
+        }else{
+            return global.NEUTRINO_METRICS_STATS_SERVER_CONFIG
+        }
     }
 }
 

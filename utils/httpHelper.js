@@ -28,7 +28,6 @@ function requestInMain(url, port, path, method, body={}, callBack=null){
     };
 
     const req = http.request(options, callBack ? function(response){
-            // Continuously update stream with data
             var body = '';
             response.on('data', function(d) {
                 body += d;
@@ -39,9 +38,12 @@ function requestInMain(url, port, path, method, body={}, callBack=null){
             });
     }:null);
 
+    req.setTimeout(3000, function(){
+        callBack && callBack(400)
+    });
+
     req.on('error', function(e){
-        console.log(e);
-        callBack(this.statusCode);
+        callBack && callBack(400)
     });
 
     req.write(postData);
@@ -61,17 +63,16 @@ function requestInRenderer(url, port, path, method, bodyJson={}, callBack=null){
         xhr.setRequestHeader('Content-Type', 'application/json');
     }
     xhr.onload = function () {
-        if (this.status >= 200 && this.status <= 304) {
-            if(callBack){
-                callBack(this.status)
-            }
-        }
+        callBack && callBack(this.status)
     };
 
-    xhr.onerror = function () {};
+    xhr.onerror = function () {
+        callBack && callBack(400)
+    };
 
     try{
         xhr.send(JSON.stringify(bodyJson));
     }catch(err){
+        callBack && callBack(400)
     }
 }
