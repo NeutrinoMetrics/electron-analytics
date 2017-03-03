@@ -4,7 +4,6 @@
   "description": "Client module for the Electron Analytics platform by NeutrinoMetrics",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
     "test": "mocha --reporter spec"
   },
   "repository": {

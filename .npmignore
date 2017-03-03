@@ -1,3 +1,4 @@
 /test
 LICENSE
 .gitignore
+.travis.yml
