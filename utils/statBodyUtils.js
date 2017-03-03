@@ -21,8 +21,12 @@ const StatBodyUtils = {
         return uuid;
     },
     initStatBody:function(appId, userSettings){
-        if(electronApp) {
+        if(!IPCUtils.isRenderer()) {
             let os =  require('os');
+
+            const appName=electronApp ? electronApp.getName() : "";
+            const appVersion=electronApp ? electronApp.getVersion() : ""
+
 
             return {
                 userId: userSettings.userId,
@@ -31,8 +35,8 @@ const StatBodyUtils = {
                 appId: appId,
                 os: os.platform().replace("darwin", "mac"),
                 appMeta: {
-                    name: electronApp.getName() || "",
-                    version:  electronApp.getVersion() || ""
+                    name: appName,
+                    version:  appVersion
                 },
                 accessTime: this.getTimestampInUTC()
             }

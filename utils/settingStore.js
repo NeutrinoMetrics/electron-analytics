@@ -3,7 +3,6 @@ const electronApp = electron.app || electron.remote.app;
 const IPCUtils = require('./ipcUtils')
 
 
-// expose the class
 const SettingStore =  {
     get(appId) {
         let fs = require('fs');

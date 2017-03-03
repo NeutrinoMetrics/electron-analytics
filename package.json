@@ -1,10 +1,11 @@
 {
   "name": "electron-analytics",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Client module for the Electron Analytics platform by NeutrinoMetrics",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",

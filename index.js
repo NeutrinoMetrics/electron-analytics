@@ -11,7 +11,6 @@ const config = require("./config.js").get();
 
 module.exports = {
     init:function(appId){
-
         if(appId && !IPCUtils.isRenderer() && process.env.EA_DISABLE_IN_DEV!=="true" ){
             global.NEUTRINO_METRICS_APP_ID=appId;
             global.NEUTRINO_METRICS_STATS_SERVER_CONFIG ={
@@ -33,6 +32,7 @@ module.exports = {
             global.NEUTRINO_METRICS_STAT_BODY=statBody;
 
             setInterval(updateSession, config.updateInterval);
+            return statBody;
         }
     },
     send:function(eventName){
